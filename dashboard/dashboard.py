@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
+import os
 
 # Set konfigurasi halaman
 st.set_page_config(page_title="Changping Air Quality", page_icon="🌤️")
@@ -9,7 +10,12 @@ st.set_page_config(page_title="Changping Air Quality", page_icon="🌤️")
 # Load data dengan cache agar lebih cepat
 @st.cache_data
 def load_data():
-    df = pd.read_csv("main_data.csv")
+    # Mengambil direktori/folder tempat file dashboard.py ini berada
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Menggabungkan path direktori dengan nama file CSV
+    file_path = os.path.join(current_dir, "main_data.csv")
+    
+    df = pd.read_csv(file_path)
     df['datetime'] = pd.to_datetime(df['datetime'])
     return df
 
